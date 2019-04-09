@@ -1,0 +1,16 @@
+{
+    "name": "parse-server",
+    "version": "1.0.0",
+    "license": "Apache-2.0",
+    "main": "index.js",
+    "dependencies": {
+        "dotenv": "^6.2.0",
+        "express": "latest",
+        "mongodb": "latest",
+        "parse-dashboard": "latest",
+        "parse-server": "latest"
+    },
+    "scripts": {
+        "start": "node index.js"
+    }
+}

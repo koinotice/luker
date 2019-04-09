@@ -1,0 +1,586 @@
+{
+  "address": "0x0f6c93268F3DdA283f827d3979B77A4B8b77148F",
+  "contractHeight": 1033,
+  "hashabi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "gRoundWait",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x0b543372"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "gOwner",
+      "outputs": [{ "name": "", "type": "address" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x58fb58d8"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "gRoundPeriod",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x5b1c48cb"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "gRoomId",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x5ea431b2"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "gProfitRatio",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x668b0daf"
+    },
+    { "inputs": [], "payable": true, "stateMutability": "payable", "type": "constructor" },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": false, "name": "creator", "type": "address" },
+        { "indexed": false, "name": "erc20Addr", "type": "address" },
+        { "indexed": false, "name": "symbol", "type": "string" },
+        { "indexed": false, "name": "name", "type": "string" },
+        { "indexed": false, "name": "id", "type": "uint256" },
+        { "indexed": false, "name": "decimical", "type": "uint256" },
+        { "indexed": false, "name": "lastLockedValue", "type": "uint256" }
+      ],
+      "name": "RoomOpened",
+      "type": "event",
+      "signature": "0x2000b9717d942bac323f385a26f6b20bddb613171cc467b2b73f6817e86846f9"
+    },
+    {
+      "anonymous": false,
+      "inputs": [{ "indexed": false, "name": "roomId", "type": "uint256" }],
+      "name": "RoomClosed",
+      "type": "event",
+      "signature": "0x67acaceb58ff1ad2aa8b3069f69c4cd076824e06a09184b75fb197ead7040be7"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": false, "name": "roomId", "type": "uint256" },
+        { "indexed": false, "name": "value", "type": "uint256" },
+        { "indexed": false, "name": "remained", "type": "uint256" }
+      ],
+      "name": "Withdrawed",
+      "type": "event",
+      "signature": "0xe492f03a13f16d9ab77da04e06cc43e6eb0a495bab6bc3d0018b7d6714e6359f"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": false, "name": "roomId", "type": "uint256" },
+        { "indexed": false, "name": "value", "type": "uint256" },
+        { "indexed": false, "name": "remained", "type": "uint256" }
+      ],
+      "name": "Deposited",
+      "type": "event",
+      "signature": "0x1ca606821992e3b34613b5b29c0bbade3a907b2969d7f9f2927f726fa4baccfb"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": false, "name": "roomId", "type": "uint256" },
+        { "indexed": false, "name": "orderId", "type": "uint256" },
+        { "indexed": false, "name": "value", "type": "uint256" }
+      ],
+      "name": "NewBetOrder",
+      "type": "event",
+      "signature": "0x3bcc29ebfaf3c11e8448a4d3659f7e312a211f4d9979bcbdbb42923150a4918d"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": false, "name": "roomId", "type": "uint256" },
+        { "indexed": false, "name": "orderId", "type": "uint256" },
+        { "indexed": false, "name": "blockNum", "type": "uint256" },
+        { "indexed": false, "name": "startBlock", "type": "uint256" }
+      ],
+      "name": "CloseRoundTooLate",
+      "type": "event",
+      "signature": "0x84842e1cd70dcda5b4f0df63bcd2e252233f6e5419d41793fd75645b14f12087"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": false, "name": "roomId", "type": "uint256" },
+        { "indexed": false, "name": "orderId", "type": "uint256" },
+        { "indexed": false, "name": "value", "type": "uint256" }
+      ],
+      "name": "PayBetOwner",
+      "type": "event",
+      "signature": "0xc6463bc3c0665fea9e0be72485dd8124a9b05c1632ffa17f1935722c5851cdfe"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": false, "name": "roomId", "type": "uint256" },
+        { "indexed": false, "name": "orderId", "type": "uint256" },
+        { "indexed": false, "name": "value", "type": "uint256" },
+        { "indexed": false, "name": "tail", "type": "uint8[10]" }
+      ],
+      "name": "PayBetTail",
+      "type": "event",
+      "signature": "0xbe2d73e6a35d95c1dac4150299e0acc4959ca3ae52a639cea50acd650c2318bd"
+    },
+    {
+      "constant": true,
+      "inputs": [{ "name": "roomId", "type": "uint256" }, { "name": "orderId", "type": "uint256" }],
+      "name": "GetBetOrder",
+      "outputs": [
+        { "name": "", "type": "address" },
+        { "name": "", "type": "uint256" },
+        { "name": "", "type": "uint256" },
+        { "name": "", "type": "uint256" },
+        { "name": "", "type": "uint256" },
+        { "name": "", "type": "bool" },
+        { "name": "", "type": "uint32[]" }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0xb076650a"
+    },
+    {
+      "constant": true,
+      "inputs": [{ "name": "roomId", "type": "uint256" }],
+      "name": "GetRoomInfo",
+      "outputs": [
+        { "name": "", "type": "address" },
+        { "name": "", "type": "address" },
+        { "name": "", "type": "string" },
+        { "name": "", "type": "string" },
+        { "name": "", "type": "uint256[4]" },
+        { "name": "", "type": "uint256[4]" },
+        { "name": "", "type": "bool" },
+        { "name": "", "type": "uint256" },
+        { "name": "", "type": "uint256" },
+        { "name": "", "type": "uint256" },
+        { "name": "", "type": "uint256" },
+        { "name": "", "type": "uint256" }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x3c3419e6"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "GetRooms",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0xdd840951"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "GetProfitRatio",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x9b458bd3"
+    },
+    {
+      "constant": false,
+      "inputs": [{ "name": "ratio", "type": "uint256" }],
+      "name": "SetProfitRatio",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0x8a427002"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "GetRoundWait",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x33d47a5b"
+    },
+    {
+      "constant": false,
+      "inputs": [{ "name": "value", "type": "uint256" }],
+      "name": "SetRoundWait",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0x876148ac"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "GetRoundPeriod",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x78463323"
+    },
+    {
+      "constant": false,
+      "inputs": [{ "name": "value", "type": "uint256" }],
+      "name": "SetRoundPeriod",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0x0df298d1"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        { "name": "erc20Addr", "type": "address" },
+        { "name": "symbol", "type": "string" },
+        { "name": "initLockedValue", "type": "uint256" },
+        { "name": "decimical", "type": "uint256" },
+        { "name": "roomName", "type": "string" },
+        { "name": "nominator", "type": "uint256[4]" },
+        { "name": "denominator", "type": "uint256[4]" }
+      ],
+      "name": "OpenRoom",
+      "outputs": [{ "name": "roomId", "type": "uint256" }],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function",
+      "signature": "0xf39e5af9"
+    },
+    {
+      "constant": false,
+      "inputs": [{ "name": "roomId", "type": "uint256" }],
+      "name": "CloseRoom",
+      "outputs": [{ "name": "", "type": "bool" }],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function",
+      "signature": "0x1d424ea1"
+    },
+    {
+      "constant": true,
+      "inputs": [{ "name": "erc20Addr", "type": "address" }],
+      "name": "GetProfit",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0xccc8efcc"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        { "name": "erc20Addr", "type": "address" },
+        { "name": "value", "type": "uint256" },
+        { "name": "receiver", "type": "address" }
+      ],
+      "name": "WithdrawProfit",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function",
+      "signature": "0xc2ee9822"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        { "name": "roomId", "type": "uint256" },
+        { "name": "value", "type": "uint256" },
+        { "name": "receiver", "type": "address" }
+      ],
+      "name": "Withdraw",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function",
+      "signature": "0x71ef96c4"
+    },
+    {
+      "constant": false,
+      "inputs": [{ "name": "roomId", "type": "uint256" }, { "name": "value", "type": "uint256" }],
+      "name": "Deposit",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function",
+      "signature": "0xa3af609b"
+    },
+    {
+      "constant": false,
+      "inputs": [{ "name": "roomId", "type": "uint256" }],
+      "name": "CloseBetOrders",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function",
+      "signature": "0x34e4aa49"
+    },
+    {
+      "constant": false,
+      "inputs": [{ "name": "roomId", "type": "uint256" }, { "name": "orderId", "type": "uint256" }],
+      "name": "CloseBetOrder",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function",
+      "signature": "0x5b65552f"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        { "name": "roomId", "type": "uint256" },
+        { "name": "startBlock", "type": "uint256" },
+        { "name": "betType", "type": "uint8" },
+        { "name": "betValue", "type": "uint32[]" }
+      ],
+      "name": "SubmitBetOrder",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function",
+      "signature": "0x2c412f6f"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        { "name": "roomId", "type": "uint256" },
+        { "name": "startBlock", "type": "uint256" },
+        { "name": "betValue", "type": "uint32[]" }
+      ],
+      "name": "SubmitBetOrderType0",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function",
+      "signature": "0x722dd1c6"
+    }
+  ],
+  "tokenabi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "name",
+      "outputs": [{ "name": "", "type": "string" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        { "name": "_spender", "type": "address" },
+        { "name": "_value", "type": "uint256" }
+      ],
+      "name": "approve",
+      "outputs": [{ "name": "", "type": "bool" }],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "initialSupply",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "unpause",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "paused",
+      "outputs": [{ "name": "", "type": "bool" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        { "name": "_spender", "type": "address" },
+        { "name": "_subtractedValue", "type": "uint256" }
+      ],
+      "name": "decreaseApproval",
+      "outputs": [{ "name": "success", "type": "bool" }],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [{ "name": "owner", "type": "address" }],
+      "name": "balanceOf",
+      "outputs": [{ "name": "", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [{ "name": "", "type": "address" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [{ "name": "", "type": "string" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        { "name": "_spender", "type": "address" },
+        { "name": "_addedValue", "type": "uint256" }
+      ],
+      "name": "increaseApproval",
+      "outputs": [{ "name": "success", "type": "bool" }],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [{ "name": "newOwner", "type": "address" }],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" },
+    { "anonymous": false, "inputs": [], "name": "Pause", "type": "event" },
+    { "anonymous": false, "inputs": [], "name": "Unpause", "type": "event" },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": true, "name": "previousOwner", "type": "address" },
+        { "indexed": true, "name": "newOwner", "type": "address" }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": true, "name": "from", "type": "address" },
+        { "indexed": true, "name": "to", "type": "address" },
+        { "indexed": false, "name": "value", "type": "uint256" }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": true, "name": "owner", "type": "address" },
+        { "indexed": true, "name": "spender", "type": "address" },
+        { "indexed": false, "name": "value", "type": "uint256" }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [{ "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" }],
+      "name": "transfer",
+      "outputs": [{ "name": "", "type": "bool" }],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        { "name": "_from", "type": "address" },
+        { "name": "_to", "type": "address" },
+        { "name": "_value", "type": "uint256" }
+      ],
+      "name": "transferFrom",
+      "outputs": [{ "name": "", "type": "bool" }],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        { "name": "_owner", "type": "address" },
+        { "name": "_spender", "type": "address" }
+      ],
+      "name": "allowance",
+      "outputs": [{ "name": "remaining", "type": "uint256" }],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]
+}

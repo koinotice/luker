@@ -1,0 +1,154 @@
+version: '3.7'
+services:
+#  aria2:
+#    image: aria2:1.0
+#    build:
+#      context: './docker/aria2'
+#    container_name: aria2
+#
+#    ports:
+#      - 7322:80
+#      - 6800:6800
+#      - 7320:8080
+#    restart: always
+#
+#    #environment:
+#    # SECRET=YOUR_SECRET_CODE
+#    volumes:
+#      - /moive:/aria2/downloads
+#      - /hash/data/conf:/aria2/conf
+#
+#  mariadb:
+#    image: 'bitnami/mariadb:latest'
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=yes
+#      - MARIADB_USER=pmker
+#      - MARIADB_PASSWORD=Zheli123
+#      - MARIADB_DATABASE=pmker
+#    ports:
+#      - '3306:3306'
+#    volumes:
+#      - /hash/data/mariadb:/bitnami/mariadb
+#
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8080:8080
+
+  vault:
+    build:
+      context: ./docker/vault
+      dockerfile: test.Dockerfile
+    ports:
+      - 8200:8200
+    volumes:
+      - ./docker/vault/config:/vault/config
+      - ./docker/vault/policies:/vault/policies
+      - /hash/data/vault:/vault/data
+      - /hash/data/logs:/vault/logs
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+    cap_add:
+      - IPC_LOCK
+    depends_on:
+      - consul
+
+    networks:
+      - gethnet
+
+  consul:
+    build:
+      context: ./docker/consul
+      dockerfile: test.dockerfile
+    ports:
+      - 8500:8500
+    command: agent -server -bind 0.0.0.0 -client 0.0.0.0 -bootstrap-expect 1 -config-file=/consul/config/config.json
+    volumes:
+      - ./docker/consul/config/consul-config.json:/consul/config/config.json
+      - /hash/data/consul:/consul/data
+    networks:
+      - gethnet
+
+#
+  mongo:
+    image: mongo
+    container_name: hash-mongo
+    restart: always
+    volumes:
+      - ./docker/data/Shanghai:/etc/localtime
+      - /hash/data/mongo/data:/data
+    ports:
+      - 27017:27017
+
+  redis:
+    image: redis
+    restart: always
+    container_name: hash-redis
+    volumes:
+      - ./docker/data/Shanghai:/etc/localtime
+      - /hash/data/redis/data:/data
+    ports:
+      - 6379:6379
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+    ports:
+      - 8081:8081
+
+
+  postgres:
+    build: "./docker/postgres"
+    container_name: hash-postgres
+    restart: "always"
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: "pmker"
+      POSTGRES_USER: "pmker"
+      POSTGRES_PASSWORD: "Zheli123"
+    volumes:
+      - /hash/data/postgresql:/var/lib/postgresql/data
+
+  nats:
+    image: nats-streaming:latest
+    restart: always
+    command: -m 8222 --store SQL --sql_driver postgres --sql_source "postgres://pmker:Zheli123@postgres/pmker?sslmode=disable"
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+
+
+#  ganache:
+#    build: "./docker/ganache"
+#    container_name: hash-node
+#    restart: "always"
+#    volumes:
+#      - /hash/data/geth:/app/data
+#      - ./docker/node/server.js:/app/data/server.js
+#
+#    ports:
+#      - "7545:8545"
+##  geth:
+#    image: ethereum/client-go
+#    container_name: hash-geth
+#    restart: "always"
+#    command: --attach http://node:8545 --ethstats geth:${NETSTATS_SECRET}@netstats:3000
+
+
+
+networks:
+  gethnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.3.0.0/24
+
+
+
+
+
+
