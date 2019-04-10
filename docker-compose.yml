@@ -1,22 +1,22 @@
 version: '3.7'
 services:
-#  aria2:
-#    image: aria2:1.0
-#    build:
-#      context: './docker/aria2'
-#    container_name: aria2
-#
-#    ports:
-#      - 7322:80
-#      - 6800:6800
-#      - 7320:8080
-#    restart: always
-#
-#    #environment:
-#    # SECRET=YOUR_SECRET_CODE
-#    volumes:
-#      - /moive:/aria2/downloads
-#      - /hash/data/conf:/aria2/conf
+  aria2:
+   image: aria2:1.0
+   build:
+     context: './docker/aria2'
+   container_name: aria2
+
+   ports:
+     - 7322:80
+     - 6800:6800
+     - 7320:8080
+   restart: always
+
+   #environment:
+   # SECRET=YOUR_SECRET_CODE
+   volumes:
+     - /hash/moive:/aria2/downloads
+     - /hash/data/conf:/aria2/conf
 #
 #  mariadb:
 #    image: 'bitnami/mariadb:latest'

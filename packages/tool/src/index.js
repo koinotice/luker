@@ -21,14 +21,15 @@ function dec(balance) {
     .times(balance)
     .toString(10);
 }
-//const contractJson = require('@pmker/common/contracts/HashDice.json')
+const contractJson = require('@pmker/common/contracts/HashDice.json')
 
-const  {tokensList} = require('@pmker/common/tokenList');
-console.log(tokensList)
 
 async function send() {
+
+  await leven.start()
   //await leven.newContrat({key:leven.accounts[5]})
 
+  console.log(leven.accounts)
   const ABI = contractJson.abi;
   const BYTECODE = contractJson.bytecode;
   let contract = leven.hashWatch;
@@ -37,8 +38,8 @@ async function send() {
   console.log(333);
   const tx = contract.new({ key: leven.accounts[0], bytecode: BYTECODE });
 
-  //  txid =await tx.txId
-  // console.log(txid)
+   txid =await tx.txId
+  console.log(txid)
   receipt = await tx.confirmed(0);
   console.log(receipt);
 
@@ -47,10 +48,10 @@ async function send() {
   console.log(wait);
 }
 
-//send()
+send()
 
 process.on('unhandledRejection', (reason, p) => {
-  //console.log('Unhandled Rejection at:', p)
+  console.log('Unhandled Rejection at:', p)
   // application specific logging, throwing an error, or other logic here
 });
 //
